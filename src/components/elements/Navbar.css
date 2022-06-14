@@ -35,7 +35,7 @@
 
 .button {
   border-radius: 25px;
-  background-color: #37eded;
+  background-color:  #32b9b7;
   color: #fff;
   padding: 0.5rem 1rem;
   margin-left: 1rem;
@@ -45,7 +45,7 @@
 
 .button:hover {
   cursor: pointer;
-  background-color: #32b9b7;
+  background-color:#42dfdf;
 }
 .modal-form {
   font-family: 'Dosis', sans-serif;

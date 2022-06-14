@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline+Text:wght@400;700;800&family=Dosis:wght@300&family=Mochiy+Pop+P+One&family=Montserrat:ital,wght@1,200&display=swap');
+
+.home-wrapper {
+  display: flex;
+  flex-direction: row;
+  font-family: 'Dosis', sans-serif;
+  font-size: 18px;
+}
+
+.welcome {
+  font-size: 30px;
+  margin-bottom: 1rem;
+  position: absolute;
+  top: 100px;
+  left: 0px;
+  width: 300px;
+  background-color: rgb(255, 255, 255, 0.5);
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.welcome2 {
+  font-size: 30px;
+  margin-bottom: 1rem;
+  position: absolute;
+  top: 500px;
+  left: 0px;
+  width: 280px;
+  background-color: rgb(255, 255, 255, 0.5);
+  padding-left: 60px;
+  padding-right: 0px;
+}
+.intro {
+  text-indent: 50px;
+  text-align: justify;
+  line-height: 1.8;
+  position: absolute;
+  top: 200px;
+  left: 0px;
+  width: 300px;
+  background-color: rgb(255, 255, 255, 0.5);
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+
+#pop_up{
+  perspective: 150px;
+  }
+  
+  #pop_up img {
+    transition: 100ms;
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
+  }
+  
+  #pop_up img:hover {
+    transform: translate3d(10px,0px,20px);  
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.8);
+    }

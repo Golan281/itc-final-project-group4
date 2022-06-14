@@ -1,0 +1,86 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline+Text:wght@400;700;800&family=Dosis:wght@300&family=Mochiy+Pop+P+One&family=Montserrat:ital,wght@1,200&display=swap');
+
+.navbar-wrapper {
+  padding: 1rem;
+  background-color: #1b1a14;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: 'Dosis', sans-serif;
+  font-size: large;
+}
+.navbar-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.navbar-item {
+  margin-right: 2rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.navbar-item:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.button {
+  border-radius: 25px;
+  background-color: #37eded;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #32b9b7;
+}
+.modal-form {
+  font-family: 'Dosis', sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.modal-form-size {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+
+}
+.vline {
+  width: 1px;
+  background-color: black;
+  
+}
+
+.form-item {
+  margin: 3px 0px;
+}
+.modal-form-button {
+  margin-top: 1rem;
+  background-color: #11dcd9;
+  border-radius: 25px;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+.modal-form-button:hover {
+  cursor: pointer;
+  background-color: #32b9b7;
+}
+ input {
+  font-family: 'Dosis', sans-serif;
+ }

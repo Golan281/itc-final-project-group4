@@ -25,12 +25,11 @@ function Navbar() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState({
-    first: "",
-    last: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     repassword: "",
-    phone: "",
   });
   const [modalIsOpen, setIsOpen] = useState(false);
   const { addUser, setCurrentUser, currentUser } = useContext(userContext);
@@ -55,7 +54,7 @@ function Navbar() {
       password: password,
     };
 
-    const res = await axios.post("", user);
+    const res = await axios.post("http://localhost:8000/v1/auth/login", user);
     if (res.data.token) {
       setEmail("");
       setPassword("");
@@ -69,14 +68,14 @@ function Navbar() {
   const onSubmitSignUp = async (e) => {
     try {
       e.preventDefault();
-      const res = await axios.post("", user);
+      const res = await axios.post("http://localhost:8000/v1/auth/register", user);
       if (res.data) {
         setUser({
-          first: "",
-          last: "",
+          firstName: "",
+          lastName: "",
           email: "",
           password: "",
-          admin: "",
+          repassword: "",
         });
 
         addUser({ ...user });
@@ -85,7 +84,7 @@ function Navbar() {
         alert("Thanks for signing up. Please Log in.");
       }
     } catch (err) {
-      alert(err);
+      alert(err.message);
     }
   };
 
@@ -189,18 +188,18 @@ function Navbar() {
             <div className="form-item">First Name</div>
             <input
               type="text"
-              name="first"
+              name="firstName"
               className="form-item"
               onChange={handleChangeSignUp}
-              id="first"
+              id="firstName"
             />
             <div className="form-item">Last Name</div>
             <input
               type="text"
-              name="last"
+              name="lastName"
               className="form-item"
               onChange={handleChangeSignUp}
-              id="last"
+              id="lastName"
             />
             <div className="modal-form-button" onClick={onSubmitSignUp}>
               Sign Up

@@ -63,27 +63,27 @@ function Modal(props) {
           <div className="form-item">First Name</div>
           <input
             type="text"
-            name="first"
+            name="firstName"
             className="form-item"
             onChange={handleChangeSignUp}
-            id="first"
+            id="firstName"
           />
           <div className="form-item">Last Name</div>
           <input
             type="text"
-            name="last"
+            name="lastName"
             className="form-item"
             onChange={handleChangeSignUp}
-            id="last"
+            id="lastName"
           />
-          <div className="form-item">Phone Number</div>
+          {/* <div className="form-item">Phone Number</div>
           <input
             type="tel"
             name="phone"
             className="form-item"
             onChange={handleChangeSignUp}
             id="phone"
-          />
+          /> */}
           <div className="modal-form-button" onClick={onSubmitSignUp}>
             Sign Up
           </div>

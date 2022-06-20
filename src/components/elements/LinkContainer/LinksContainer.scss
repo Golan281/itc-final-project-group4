@@ -1,0 +1,33 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  Button {
+    margin-bottom: 20px;
+  }
+
+  .linksContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  Button {
+    color: white;
+    background-color: #32b9b7;
+    align-self: baseline;
+    justify-self: flex-end;
+    white-space: nowrap;
+    min-width: fit-content;
+
+    &:disabled {
+      background-color: red;
+    }
+    &:hover {
+      background-color: #42dfdf;
+    }
+  }
+}

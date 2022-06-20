@@ -4,8 +4,7 @@ import Modal from "react-modal";
 import "./Navbar.css";
 import userContext from "../Context/userContext";
 import axios from "axios";
-import logo from "../images/Logo.PNG"
-
+import logo from "../images/Logo.PNG";
 
 const customStyles = {
   content: {
@@ -98,15 +97,9 @@ function Navbar() {
   return (
     <div className="navbar-wrapper">
       <div className="navbar-left">
-        <img
-          src={logo}
-          height="50"
-          className="navbar-item"
-          alt="logo"
-        ></img>
-        
-</div>
-<div className="navbar-right">
+        <img src={logo} height="50" className="navbar-item" alt="logo"></img>
+      </div>
+      <div className="navbar-right">
         {currentUser ? (
           <div>
             <Link className="navbar-item" to="/">

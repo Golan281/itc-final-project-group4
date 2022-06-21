@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 import Home from "./components/pages/Home";
 import SignUp from "./components/pages/SignUp";
 import SignIn from "./components/pages/SignIn";
+import NotFoundPage from "./components/pages/NotFoundPage";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
@@ -65,9 +66,14 @@ function App() {
       <BrowserRouter>
         {!currentUser ? <div></div> : <Navbar />}
         <Routes>
-          <Route exact path="/home" element={<Home />} />
           <Route exact path="/" element={<SignUp />} />
           <Route exact path="/signIn" element={<SignIn />} />
+          <Route exact path="/home" element={<Home />} />
+          <Route exact path="/work" element={<Home />} />
+          <Route exact path="/leisure" element={<Home />} />
+          <Route exact path="/hobbies" element={<Home />} />
+          <Route exact path="/education" element={<Home />} />
+          <Route path="/404" component={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </AppContext.Provider>

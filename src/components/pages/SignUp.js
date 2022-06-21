@@ -74,7 +74,8 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <img src={logo} alt ="tabCollect" />
+          <img src={logo} alt ="tabCollect" style= {{width:"100%"}}
+/>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>

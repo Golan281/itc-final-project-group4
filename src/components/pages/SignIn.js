@@ -61,7 +61,7 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <img src={logo} alt ="tabCollect"/>
+          <img src={logo} alt ="tabCollect" style= {{width:"100%"}}/>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>

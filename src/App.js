@@ -1,11 +1,13 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import Home from "./components/pages/Home";
 import Navbar from "./components/elements/Navbar";
 import AppContext from "../src/components/Context/userContext";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import Home from "./components/pages/Home";
+import SignUp from "./components/pages/SignUp";
+import SignIn from "./components/pages/SignIn";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
@@ -63,7 +65,9 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/home" element={<Home />} />
+          <Route exact path="/" element={<SignUp />} />
+          <Route exact path="/signIn" element={<SignIn />} />
         </Routes>
       </BrowserRouter>
     </AppContext.Provider>

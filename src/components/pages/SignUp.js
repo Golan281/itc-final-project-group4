@@ -12,14 +12,13 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import userContext from "../Context/userContext";
 import axios from "axios";
+import logo from "../images/tabCollectLogo.PNG"
 
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState({
+   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -27,7 +26,7 @@ export default function SignUp() {
     repassword: "",
   });
 
-  const { addUser, setCurrentUser, currentUser } = useContext(userContext);
+  const { addUser } = useContext(userContext);
   const navigate = useNavigate();
 
   const handleChangeSignUp = (e) => {
@@ -75,7 +74,7 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
+         <img src={logo}/>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>

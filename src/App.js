@@ -63,7 +63,7 @@ function App() {
       }}
     >
       <BrowserRouter>
-        <Navbar />
+        {!currentUser ? <div></div> : <Navbar />}
         <Routes>
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/" element={<SignUp />} />

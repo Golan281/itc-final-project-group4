@@ -1,5 +1,4 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -12,28 +11,29 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import userContext from "../Context/userContext";
 import axios from "axios";
-import logo from "../images/tabCollectLogo.PNG"
-
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
+import logo from "../images/tabCollectLogo.PNG";
 
 const theme = createTheme();
 
 export default function SignUp() {
-   const [user, setUser] = useState({
+  const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
     repassword: "",
   });
-
   const { addUser } = useContext(userContext);
+  const [alert, setAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState("");
   const navigate = useNavigate();
 
   const handleChangeSignUp = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
-
 
   const onSubmitSignUp = async (e) => {
     try {
@@ -53,14 +53,14 @@ export default function SignUp() {
 
         addUser({ ...user });
         navigate("/");
-        alert("Thanks for signing up. Please Log in.");
+        setAlertContent("Thanks for signing up. Please Log in.");
+        setAlert(true);
       }
     } catch (err) {
-      alert(err.message);
+      setAlertContent(err.message);
+      setAlert(true);
     }
   };
-
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -74,10 +74,20 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-         <img src={logo}/>
+          <img src={logo} alt ="tabCollect" />
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            {alert ? (
+              <Alert severity="info">
+                <AlertTitle>Alert</AlertTitle>
+                {alertContent}
+              </Alert>
+            ) : (
+              <div></div>
+            )}
+          </Stack>
           <Box
             component="form"
             noValidate
@@ -95,7 +105,6 @@ export default function SignUp() {
                   label="First Name"
                   autoFocus
                   onChange={handleChangeSignUp}
-             
                 />
               </Grid>
               <Grid item xs={12} sm={6}>

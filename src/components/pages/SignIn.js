@@ -11,34 +11,43 @@ import axios from "axios";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import logo from "../images/tabCollectLogo.PNG"
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
+import logo from "../images/tabCollectLogo.PNG";
 
 const theme = createTheme();
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setCurrentUser} = useContext(userContext);
+  const { setCurrentUser } = useContext(userContext);
+  const [alert, setAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState("");
   const navigate = useNavigate();
 
-
   const onSubmitLogin = async (e) => {
-    e.preventDefault();
-    const user = {
-      email: email,
-      password: password,
-    };
-
-    const res = await axios.post("http://localhost:8000/v1/auth/login", user);
-    if (res.data.token) {
-      setEmail("");
-      setPassword("");
-      localStorage.setItem("token", JSON.stringify(res.data.token));
-      setCurrentUser(res.data.user);
-      navigate("/");
+    try {
+      e.preventDefault();
+      const user = {
+        email: email,
+        password: password,
+      };
+      const res = await axios.post("http://localhost:8000/v1/auth/login", user);
+      if (res.data) {
+        setEmail("");
+        setPassword("");
+        localStorage.setItem("token", JSON.stringify(res.data.token));
+        setCurrentUser(res.data.user);
+        setAlertContent("Thanks for signing up. Please Log in.");
+        setAlert(true);
+        navigate("/");
+      }
+    } catch (err) {
+      setAlertContent(err.message);
+      setAlert(true);
     }
   };
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -52,16 +61,21 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <img src={logo}/>
+          <img src={logo} alt ="tabCollect"/>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign in
           </Typography>
-          <Box
-            component="form"
-            noValidate
-           // onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            {alert ? (
+              <Alert severity="info">
+                <AlertTitle>Alert</AlertTitle>
+                {alertContent}
+              </Alert>
+            ) : (
+              <div></div>
+            )}
+          </Stack>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField

@@ -4,8 +4,6 @@ import "./Navbar.css";
 import userContext from "../Context/userContext";
 import logo from "../images/tabCollectLogo.PNG";
 
-
-
 function Navbar() {
   const { currentUser } = useContext(userContext);
   const navigate = useNavigate();

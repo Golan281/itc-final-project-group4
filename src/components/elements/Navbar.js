@@ -15,7 +15,7 @@ function Navbar() {
     setCurrentUser("");
     deleteWorkSpace();
     navigate("/");
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (

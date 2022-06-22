@@ -19,16 +19,14 @@ function App() {
   const [allSaveByUser, setAllSaveByUser] = useState();
   const [newTab, setNewTab] = useState();
   const [newWorkspace, setNewWorksapce] = useState();
-  let token;
+  // const []
+  const [token, setToken] = useState("");
 
   useEffect(() => {
-    const getAccessToken = () => {
-      const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-      if (accessToken) {
-        token = accessToken;
-      }
-    };
-    getAccessToken();
+    const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+    if (accessToken) {
+      setToken(accessToken);
+    }
   }, []);
 
   useEffect(() => {
@@ -46,7 +44,7 @@ function App() {
       }
     }
     getUser();
-  }, [token]);
+  }, [token, setCurrentUser]);
 
   useEffect(() => {
     async function getUserWorkSpace() {
@@ -82,7 +80,7 @@ function App() {
       }}
     >
       <BrowserRouter>
-        {!currentUser ? <div></div> : <Navbar />}
+        {currentUser?.id ? <Navbar /> : <div></div>}
         <Routes>
           <Route exact path="/" element={<SignUp />} />
           <Route exact path="/signIn" element={<SignIn />} />

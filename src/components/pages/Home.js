@@ -1,4 +1,3 @@
-import AppContext from "../Context/userContext";
 import "./Home.css";
 import * as React from "react";
 import PropTypes from "prop-types";

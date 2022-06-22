@@ -6,12 +6,13 @@ import { nanoid } from "nanoid";
 
 const TabContents = (workSpaceId) => {
   const userWorkSpace = useStore((state) => state.userWorkSpace);
+  const currentUser = useStore((state) => state.currentUser);
   const addTab = useStore((state) => state.addTab);
   const removeTab = useStore((state) => state.removeTab);
   const [isError, setIsError] = useState(false);
-  const [isEditing, setIsEditing] = useState(true);
   const [link, setLink] = useState("");
   const [linkName, setLinkName] = useState("");
+  const [currentWorkSpace, setCurrentWorkspace] = useState([]);
   const [rerender, setRerender] = useState(true);
 
   const handleAddLink = () => {
@@ -19,6 +20,7 @@ const TabContents = (workSpaceId) => {
       setIsError(true);
       return;
     }
+    console.log(currentUser);
     let timeStamp = new Date().getTime();
     const newTab = {
       id: nanoid(),
@@ -28,35 +30,19 @@ const TabContents = (workSpaceId) => {
           : `http://${link}`,
       linkName,
       timeStamp,
-      workSpaceId,
+      workSpaceId: workSpaceId.workSpaceId,
     };
     addTab(newTab);
     setIsError(false);
-    setIsEditing(false);
+
+    console.log(userWorkSpace);
     setRerender((prev) => !prev);
   };
 
-  const removeLink = () => {
-    setIsEditing(true);
-    console.log(userWorkSpace);
-  };
-
   useEffect(() => {
-    // console.log(userWorkSpace);
-    // const handleSubmit = async () => {
-    //   try {
-    //     const response = await axios.post(
-    //       LOGIN_URL,
-    //       JSON.stringify({ user, pwd }),
-    //       {
-    //         headers: { "Content-Type": "application/json" },
-    //         withCredentials: true,
-    //       }
-    //     );
-    //   } catch (err) {
-    //     throw Error(err);
-    //   }
-    // };
+    setCurrentWorkspace(
+      userWorkSpace.filter((tab) => tab.workSpaceId === workSpaceId.workSpaceId)
+    );
   }, [userWorkSpace]);
 
   return (
@@ -103,10 +89,10 @@ const TabContents = (workSpaceId) => {
         </div>
       </div>
       <div className="links">
-        {userWorkSpace.map((tab) => (
+        {currentWorkSpace.map((tab) => (
           <div className="link-styles" key={nanoid()}>
             <span>
-              <a rel="noreferer" target="_blank" href={tab.url}>
+              <a rel="noreferrer" target="_blank" href={tab.url}>
                 {tab.linkName}
               </a>
               <div>{tab.id}</div>

@@ -12,14 +12,11 @@ import NotFoundPage from "./components/pages/NotFoundPage";
 import useStore from "./Store/useStore";
 
 function App() {
-  // const [currentUser, setCurrentUser] = useState();
-  // const token = JSON.parse(localStorage.getItem("token"));
   const currentUser = useStore((state) => state.currentUser);
   const setCurrentUser = useStore((state) => state.setCurrentUser);
   const [allSaveByUser, setAllSaveByUser] = useState();
   const [newTab, setNewTab] = useState();
   const [newWorkspace, setNewWorksapce] = useState();
-  // const []
   const [token, setToken] = useState("");
 
   useEffect(() => {

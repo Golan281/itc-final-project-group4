@@ -66,19 +66,19 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <TabContents workSpaceId={nanoid()} />
+        <TabContents workSpaceId="work" />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <TabContents workSpaceId={nanoid()} />
+        <TabContents workSpaceId="home" />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <TabContents workSpaceId={nanoid()} />
+        <TabContents workSpaceId="leisure" />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <TabContents workSpaceId={nanoid()} />
+        <TabContents workSpaceId="hobbies" />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <TabContents workSpaceId={nanoid()} />
+        <TabContents workSpaceId="education" />
       </TabPanel>
     </Box>
   );

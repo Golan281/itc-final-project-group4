@@ -4,9 +4,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import userContext from "../Context/userContext";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -15,16 +14,19 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import logo from "../images/tabCollectLogo.PNG";
+import useStore from "../../Store/useStore";
 
 const theme = createTheme();
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setCurrentUser } = useContext(userContext);
+  const currentUser = useStore((state) => state.currentUser);
+  const setCurrentUser = useStore((state) => state.setCurrentUser);
   const [alert, setAlert] = useState(false);
   const [alertContent, setAlertContent] = useState("");
   const navigate = useNavigate();
+  const LOGIN_URL = "http://localhost:8000/v1/auth/login";
 
   const onSubmitLogin = async (e) => {
     try {
@@ -33,12 +35,21 @@ export default function SignIn() {
         email: email,
         password: password,
       };
-      const res = await axios.post("http://localhost:8000/v1/auth/login", user);
+
+      const res = await axios.post(LOGIN_URL, JSON.stringify({ ...user }), {
+        headers: { "content-type": "application/json" },
+        withCredentials: true,
+      });
+
       if (res.data) {
+        console.log(res.data);
         setEmail("");
         setPassword("");
-        localStorage.setItem("token", JSON.stringify(res.data.token));
-        setCurrentUser(res.data.user);
+        localStorage.setItem(
+          "accessToken",
+          JSON.stringify(res.data.accessToken)
+        );
+        setCurrentUser(res.data);
         setAlertContent("Thanks for signing up. Please Log in.");
         setAlert(true);
         navigate("/");
@@ -61,7 +72,7 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <img src={logo} alt ="tabCollect" style= {{width:"100%"}}/>
+          <img src={logo} alt="tabCollect" style={{ width: "100%" }} />
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>

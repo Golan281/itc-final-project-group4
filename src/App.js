@@ -9,15 +9,30 @@ import Home from "./components/pages/Home";
 import SignUp from "./components/pages/SignUp";
 import SignIn from "./components/pages/SignIn";
 import NotFoundPage from "./components/pages/NotFoundPage";
+import useStore from "./Store/useStore";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState();
-  const token = JSON.parse(localStorage.getItem("token"));
+  // const [currentUser, setCurrentUser] = useState();
+  // const token = JSON.parse(localStorage.getItem("token"));
+  const currentUser = useStore((state) => state.currentUser);
+  const setCurrentUser = useStore((state) => state.setCurrentUser);
   const [allSaveByUser, setAllSaveByUser] = useState();
   const [newTab, setNewTab] = useState();
   const [newWorkspace, setNewWorksapce] = useState();
+  let token;
 
   useEffect(() => {
+    const getAccessToken = () => {
+      const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+      if (accessToken) {
+        token = accessToken;
+      }
+    };
+    getAccessToken();
+  }, []);
+
+  useEffect(() => {
+    console.log(localStorage.getItem("accessToken"));
     async function getUser() {
       try {
         if (!token) {
@@ -25,13 +40,13 @@ function App() {
         }
         const decoded = jwt_decode(token);
         const res = await axios.get(``);
-        setCurrentUser(res.data);
+        setCurrentUser(...res.data);
       } catch (err) {
         console.log(err);
       }
     }
     getUser();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     async function getUserWorkSpace() {
@@ -51,10 +66,13 @@ function App() {
     getUserWorkSpace();
   });
 
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
+
   return (
     <AppContext.Provider
       value={{
-        currentUser,
         allSaveByUser,
         setAllSaveByUser,
         newWorkspace,

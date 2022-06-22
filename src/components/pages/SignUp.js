@@ -15,6 +15,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import logo from "../images/tabCollectLogo.PNG";
+const SIGNUP_URL = "http://localhost:8000/v1/auth/register";
 
 const theme = createTheme();
 
@@ -26,7 +27,7 @@ export default function SignUp() {
     password: "",
     repassword: "",
   });
-  const { addUser } = useContext(userContext);
+  // const { addUser } = useContext(userContext);
   const [alert, setAlert] = useState(false);
   const [alertContent, setAlertContent] = useState("");
   const navigate = useNavigate();
@@ -36,12 +37,21 @@ export default function SignUp() {
   };
 
   const onSubmitSignUp = async (e) => {
+    const { password, repassword } = user;
+    if (password !== repassword) {
+      e.preventDefault();
+      setAlert(true);
+      setAlertContent("passwords don not match. please, try again.");
+      return;
+    }
     try {
       e.preventDefault();
-      const res = await axios.post(
-        "http://localhost:8000/v1/auth/register",
-        user
-      );
+
+      const res = await axios.post(SIGNUP_URL, JSON.stringify({ ...user }), {
+        headers: { "content-type": "application/json" },
+        withCredentials: true,
+      });
+
       if (res.data) {
         setUser({
           firstName: "",
@@ -51,7 +61,7 @@ export default function SignUp() {
           repassword: "",
         });
 
-        addUser({ ...user });
+        // addUser({ ...user });
         navigate("/");
         setAlertContent("Thanks for signing up. Please Log in.");
         setAlert(true);
@@ -74,8 +84,7 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <img src={logo} alt ="tabCollect" style= {{width:"100%"}}
-/>
+          <img src={logo} alt="tabCollect" style={{ width: "100%" }} />
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
@@ -127,6 +136,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleChangeSignUp}
                 />
               </Grid>
               <Grid item xs={12}>

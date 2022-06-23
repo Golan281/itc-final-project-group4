@@ -5,7 +5,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import TabContents from "../elements/TabContents/TabContents";
-import { nanoid } from "nanoid";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,19 +65,19 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <TabContents workSpaceId="work" />
+        <TabContents workSpaceIDName="work" />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <TabContents workSpaceId="home" />
+        <TabContents workSpaceIDName="home" />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <TabContents workSpaceId="leisure" />
+        <TabContents workSpaceIDName="leisure" />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <TabContents workSpaceId="hobbies" />
+        <TabContents workSpaceIDName="hobbies" />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <TabContents workSpaceId="education" />
+        <TabContents workSpaceIDName="education" />
       </TabPanel>
     </Box>
   );

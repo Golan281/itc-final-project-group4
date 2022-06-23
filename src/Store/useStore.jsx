@@ -27,6 +27,12 @@ const useStore = create(
         }));
       },
 
+      getTabsFromServer: (res) => {
+        set((state) => ({
+          userWorkSpace: [res, ...state.userWorkSpace],
+        }));
+      },
+
       removeTab: (tabId) => {
         set((state) => ({
           userWorkSpace: state.userWorkSpace.filter(

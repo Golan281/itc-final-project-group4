@@ -23,6 +23,7 @@ const TabContents = (workSpaceIDName) => {
   const CREATE_TAB_URL = `http://localhost:8000/v1/workspace/createTab/${currentWorkSpaceId}`;
   const GET_ALL_WORKSPACES = `http://localhost:8000/v1/workspace/${currentUser.id}`;
   const DELETE_TAB = `http://localhost:8000/v1/workspace/:${currentTabId}`;
+  const ARCHIVE_TAB = `http://localhost:8000/v1/workspace/ArchiveTab`;
 
   useEffect(() => {
     setCurrentWorkSpaceId(workSpaceIDName.workSpaceIDName);
@@ -54,8 +55,9 @@ const TabContents = (workSpaceIDName) => {
           (workSpace) =>
             workSpace.workSpaceName === workSpaceIDName.workSpaceIDName
         );
-
-        setCurrentWorkspace(workSpaceToShow[0].currentUserTabs);
+        if (workSpaceToShow[0]) {
+          setCurrentWorkspace(workSpaceToShow[0].currentUserTabs);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -140,9 +142,34 @@ const TabContents = (workSpaceIDName) => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(userWorkSpace);
-  // }, [userWorkSpace]);
+  useEffect(() => {
+    console.log(currentWorkSpace);
+  }, [currentWorkSpace]);
+
+  // const moveToArchive = async (tabId) => {
+  //   try {
+  //     const res = await axios.post(
+  //       ARCHIVE_TAB,
+  //       JSON.stringify({
+  //         // userID: currentUser.id,
+  //         workSpaceName: workSpaceIDName.workSpaceIDName,
+  //         tabId: tabId,
+  //       }),
+  //       {
+  //         headers: {
+  //           "content-type": "application/json",
+  //           Authorization: `Bearer ${currentUser.accessToken}`,
+  //         },
+
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     console.log(res.data.workspace.currentUserTabs);
+  //     setCurrentWorkspace(res.data.workspace.currentUserTabs);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div>
@@ -188,20 +215,39 @@ const TabContents = (workSpaceIDName) => {
         </div>
       </div>
       <div className="links">
+        {currentWorkSpace
+          // .filter((tab) => tab.isArchived === true)
+          .map((tab) => (
+            <div className="link-styles" key={nanoid()}>
+              <span>
+                <div> {/* <Button>Archive</Button> */}</div>
+                <a rel="noreferrer" target="_blank" href={tab.tabURL}>
+                  {tab.tabName}
+                </a>
+
+                <Button onClick={() => removeTabFromServer(tab._id)}>
+                  Delete link
+                </Button>
+              </span>
+            </div>
+          ))}
+      </div>
+
+      {/* <div className="links">
         {currentWorkSpace.map((tab) => (
-          <div className="link-styles" key={nanoid()}>
+          <div className="link-styles-Archived" key={nanoid()}>
             <span>
               <a rel="noreferrer" target="_blank" href={tab.tabURL}>
                 {tab.tabName}
               </a>
               <div>{tab.tabURL}</div>
               <Button onClick={() => removeTabFromServer(tab._id)}>
-                Delete link
+                Discard
               </Button>
             </span>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

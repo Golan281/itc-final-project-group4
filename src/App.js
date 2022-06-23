@@ -26,44 +26,43 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(localStorage.getItem("accessToken"));
-    async function getUser() {
-      try {
-        if (!token) {
-          return;
-        }
-        const decoded = jwt_decode(token);
-        const res = await axios.get(``);
-        setCurrentUser(...res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getUser();
-  }, [token, setCurrentUser]);
+  // useEffect(() => {
+  //   async function getUser() {
+  //     try {
+  //       if (!token) {
+  //         return;
+  //       }
+  //       const decoded = jwt_decode(token);
+  //       const res = await axios.get(``);
+  //       setCurrentUser(...res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   getUser();
+  // }, [token, setCurrentUser]);
 
-  useEffect(() => {
-    async function getUserWorkSpace() {
-      const headersConfig = {
-        Authorization: `Bearer ${token}`,
-      };
-      try {
-        const res = await axios.get(``, {
-          headers: headersConfig,
-        });
+  // useEffect(() => {
+  //   async function getUserWorkSpace() {
+  //     const headersConfig = {
+  //       Authorization: `Bearer ${token}`,
+  //     };
+  //     try {
+  //       const res = await axios.get(``, {
+  //         headers: headersConfig,
+  //       });
 
-        setAllSaveByUser(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getUserWorkSpace();
-  });
+  //       setAllSaveByUser(res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   getUserWorkSpace();
+  // });
 
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
+  // useEffect(() => {
+  //   console.log(currentUser);
+  // }, [currentUser]);
 
   return (
     <AppContext.Provider

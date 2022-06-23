@@ -21,12 +21,45 @@ const TabContents = (workSpaceIDName) => {
   const [currentWorkSpaceId, setCurrentWorkSpaceId] = useState("");
 
   const CREATE_TAB_URL = `http://localhost:8000/v1/workspace/createTab/:${currentWorkSpaceId}`;
-  const GET_ALL_WORKSPACES = `http://localhost:8000/v1/workspace/getAllWorkSpaces`;
+  const GET_ALL_WORKSPACES = `http://localhost:8000/v1/workspace/:userID`;
   const DELETE_TAB = `http://localhost:8000/v1/workspace/:${currentTabId}`;
 
   useEffect(() => {
     setCurrentWorkSpaceId(workSpaceIDName.workSpaceIDName);
   }, []);
+
+  //   useEffect(() => {
+  //     const getWorkSpaces = () => {
+
+  //     }
+  // try {
+  //       const res = await axios.get(
+  //         GET_ALL_WORKSPACES,
+  //         JSON.stringify({
+  //           newTab,
+
+  //           userID: currentUser.id,
+  //           workSpaceName: currentWorkSpaceId,
+  //         }),
+  //         {
+  //           headers: {
+  //             "content-type": "application/json",
+  //             Authorization: `Bearer ${currentUser.accessToken}`,
+  //           },
+
+  //           params: {
+  //             userID: currentUser.id
+  //           },
+
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       console.log(res.data);
+  //       // setCurrentWorkspace(res.data.workspace.currentUserTabs);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }, [])
 
   const handleAddLink = async () => {
     console.log(currentWorkSpaceId.toString());

@@ -20,53 +20,55 @@ const TabContents = (workSpaceIDName) => {
   const [currentTabId, setCurrentTabId] = useState("");
   const [currentWorkSpaceId, setCurrentWorkSpaceId] = useState("");
 
-  const CREATE_TAB_URL = `http://localhost:8000/v1/workspace/createTab/:${currentWorkSpaceId}`;
-  const GET_ALL_WORKSPACES = `http://localhost:8000/v1/workspace/:userID`;
+  const CREATE_TAB_URL = `http://localhost:8000/v1/workspace/createTab/${currentWorkSpaceId}`;
+  const GET_ALL_WORKSPACES = `http://localhost:8000/v1/workspace/${currentUser.id}`;
   const DELETE_TAB = `http://localhost:8000/v1/workspace/:${currentTabId}`;
 
   useEffect(() => {
     setCurrentWorkSpaceId(workSpaceIDName.workSpaceIDName);
   }, []);
 
-  //   useEffect(() => {
-  //     const getWorkSpaces = () => {
+  useEffect(() => {
+    const getWorkSpaces = async () => {
+      try {
+        const res = await axios.get(
+          GET_ALL_WORKSPACES,
 
-  //     }
-  // try {
-  //       const res = await axios.get(
-  //         GET_ALL_WORKSPACES,
-  //         JSON.stringify({
-  //           newTab,
+          {
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Bearer ${currentUser.accessToken}`,
+            },
 
-  //           userID: currentUser.id,
-  //           workSpaceName: currentWorkSpaceId,
-  //         }),
-  //         {
-  //           headers: {
-  //             "content-type": "application/json",
-  //             Authorization: `Bearer ${currentUser.accessToken}`,
-  //           },
+            params: {
+              userID: currentUser.id,
+            },
 
-  //           params: {
-  //             userID: currentUser.id
-  //           },
+            withCredentials: true,
+          }
+        );
 
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       console.log(res.data);
-  //       // setCurrentWorkspace(res.data.workspace.currentUserTabs);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }, [])
+        await deleteWorkSpace();
+        await addTab(res.data);
+        const workSpaceToShow = userWorkSpace[0].filter(
+          (workSpace) =>
+            workSpace.workSpaceName === workSpaceIDName.workSpaceIDName
+        );
+
+        setCurrentWorkspace(workSpaceToShow[0].currentUserTabs);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getWorkSpaces();
+  }, []);
 
   const handleAddLink = async () => {
-    console.log(currentWorkSpaceId.toString());
     if (link === "" || linkName === "") {
       setIsError(true);
       return;
     }
+
     console.log(currentUser);
     console.log('just for netlify test',rerender);
     let timeStamp = new Date().getTime();
@@ -79,8 +81,6 @@ const TabContents = (workSpaceIDName) => {
       tabName: linkName,
       timeStamp,
     };
-    // addTab(newTab);
-
     try {
       const res = await axios.post(
         CREATE_TAB_URL,
@@ -103,7 +103,6 @@ const TabContents = (workSpaceIDName) => {
           withCredentials: true,
         }
       );
-      console.log(res.data.workspace.currentUserTabs);
       setCurrentWorkspace(res.data.workspace.currentUserTabs);
     } catch (err) {
       console.log(err);
@@ -135,7 +134,7 @@ const TabContents = (workSpaceIDName) => {
           withCredentials: true,
         }
       );
-      console.log(res.data);
+
       setCurrentWorkspace(res.data.workspace.currentUserTabs);
       setRerender((prev) => !prev);
     } catch (err) {
@@ -143,9 +142,9 @@ const TabContents = (workSpaceIDName) => {
     }
   };
 
-  useEffect(() => {
-    console.log(currentWorkSpace);
-  }, [currentWorkSpace]);
+  // useEffect(() => {
+  //   console.log(userWorkSpace);
+  // }, [userWorkSpace]);
 
 
   return (
@@ -198,7 +197,7 @@ const TabContents = (workSpaceIDName) => {
               <a rel="noreferrer" target="_blank" href={tab.tabURL}>
                 {tab.tabName}
               </a>
-              <div>{tab._id}</div>
+              <div>{tab.tabURL}</div>
               <Button onClick={() => removeTabFromServer(tab._id)}>
                 Delete link
               </Button>

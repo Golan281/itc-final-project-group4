@@ -53,7 +53,7 @@ export default function SignIn() {
         setCurrentUser(res.data);
         setAlertContent("Thanks for signing up. Please Log in.");
         setAlert(true);
-        navigate("/");
+        navigate("/Home");
       }
     } catch (err) {
       setAlertContent(err.message);

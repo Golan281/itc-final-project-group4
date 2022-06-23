@@ -34,6 +34,7 @@ function App() {
           return;
         }
         const decoded = jwt_decode(token);
+        console.table('just for netlify test',decoded)
         const res = await axios.get(``);
         setCurrentUser(...res.data);
       } catch (err) {

@@ -35,7 +35,7 @@ const TabContents = (workSpaceIDName) => {
       return;
     }
     console.log(currentUser);
-
+    console.log('just for netlify test',rerender);
     let timeStamp = new Date().getTime();
     const newTab = {
       id: nanoid(),
@@ -113,6 +113,7 @@ const TabContents = (workSpaceIDName) => {
   useEffect(() => {
     console.log(currentWorkSpace);
   }, [currentWorkSpace]);
+
 
   return (
     <div>

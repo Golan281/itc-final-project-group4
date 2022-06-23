@@ -21,6 +21,7 @@ const TabContents = (workSpaceId) => {
       return;
     }
     console.log(currentUser);
+    console.log('just for netlify test',rerender);
     let timeStamp = new Date().getTime();
     const newTab = {
       id: nanoid(),
@@ -43,7 +44,7 @@ const TabContents = (workSpaceId) => {
     setCurrentWorkspace(
       userWorkSpace.filter((tab) => tab.workSpaceId === workSpaceId.workSpaceId)
     );
-  }, [userWorkSpace]);
+  }, [userWorkSpace, workSpaceId.workSpaceId]);
 
   return (
     <div>

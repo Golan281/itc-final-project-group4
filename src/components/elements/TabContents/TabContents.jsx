@@ -3,9 +3,12 @@ import { TextField, Button } from "@mui/material";
 import useStore from "../../../Store/useStore";
 import "./TabContents.scss";
 import { nanoid } from "nanoid";
+import axios from "axios";
 
-const TabContents = (workSpaceId) => {
+const TabContents = (workSpaceIDName) => {
   const userWorkSpace = useStore((state) => state.userWorkSpace);
+  const deleteWorkSpace = useStore((state) => state.deleteWorkSpace);
+  const getTabsFromServer = useStore((state) => state.getTabsFromServer);
   const currentUser = useStore((state) => state.currentUser);
   const addTab = useStore((state) => state.addTab);
   const removeTab = useStore((state) => state.removeTab);
@@ -14,8 +17,19 @@ const TabContents = (workSpaceId) => {
   const [linkName, setLinkName] = useState("");
   const [currentWorkSpace, setCurrentWorkspace] = useState([]);
   const [rerender, setRerender] = useState(true);
+  const [currentTabId, setCurrentTabId] = useState("");
+  const [currentWorkSpaceId, setCurrentWorkSpaceId] = useState("");
 
-  const handleAddLink = () => {
+  const CREATE_TAB_URL = `http://localhost:8000/v1/workspace/createTab/:${currentWorkSpaceId}`;
+  const GET_ALL_WORKSPACES = `http://localhost:8000/v1/workspace/getAllWorkSpaces`;
+  const DELETE_TAB = `http://localhost:8000/v1/workspace/:${currentTabId}`;
+
+  useEffect(() => {
+    setCurrentWorkSpaceId(workSpaceIDName.workSpaceIDName);
+  }, []);
+
+  const handleAddLink = async () => {
+    console.log(currentWorkSpaceId.toString());
     if (link === "" || linkName === "") {
       setIsError(true);
       return;
@@ -25,26 +39,81 @@ const TabContents = (workSpaceId) => {
     let timeStamp = new Date().getTime();
     const newTab = {
       id: nanoid(),
-      url:
+      tabURL:
         link.includes("http://") || link.includes("https://")
           ? link
           : `http://${link}`,
-      linkName,
+      tabName: linkName,
       timeStamp,
-      workSpaceId: workSpaceId.workSpaceId,
     };
-    addTab(newTab);
-    setIsError(false);
+    // addTab(newTab);
 
-    console.log(userWorkSpace);
+    try {
+      const res = await axios.post(
+        CREATE_TAB_URL,
+        JSON.stringify({
+          newTab,
+
+          userID: currentUser.id,
+          workSpaceName: currentWorkSpaceId,
+        }),
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${currentUser.accessToken}`,
+          },
+
+          // params: {
+          //   workSpaceId: workSpaceIDName.workSpaceIDName,
+          // },
+
+          withCredentials: true,
+        }
+      );
+      console.log(res.data.workspace.currentUserTabs);
+      setCurrentWorkspace(res.data.workspace.currentUserTabs);
+    } catch (err) {
+      console.log(err);
+    }
+    setIsError(false);
     setRerender((prev) => !prev);
   };
 
+  const removeTabFromServer = async (id) => {
+    setCurrentTabId(id);
+    try {
+      const res = await axios.patch(
+        DELETE_TAB,
+        JSON.stringify({
+          userID: currentUser.id,
+          workSpaceName: workSpaceIDName.workSpaceIDName,
+          tabId: id,
+        }),
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${currentUser.accessToken}`,
+          },
+
+          params: {
+            tabId: currentTabId,
+          },
+
+          withCredentials: true,
+        }
+      );
+      console.log(res.data);
+      setCurrentWorkspace(res.data.workspace.currentUserTabs);
+      setRerender((prev) => !prev);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    setCurrentWorkspace(
-      userWorkSpace.filter((tab) => tab.workSpaceId === workSpaceId.workSpaceId)
-    );
-  }, [userWorkSpace, workSpaceId.workSpaceId]);
+    console.log(currentWorkSpace);
+  }, [currentWorkSpace]);
+
 
   return (
     <div>
@@ -93,11 +162,13 @@ const TabContents = (workSpaceId) => {
         {currentWorkSpace.map((tab) => (
           <div className="link-styles" key={nanoid()}>
             <span>
-              <a rel="noreferrer" target="_blank" href={tab.url}>
-                {tab.linkName}
+              <a rel="noreferrer" target="_blank" href={tab.tabURL}>
+                {tab.tabName}
               </a>
-              <div>{tab.id}</div>
-              <Button onClick={() => removeTab(tab.id)}>Delete link</Button>
+              <div>{tab._id}</div>
+              <Button onClick={() => removeTabFromServer(tab._id)}>
+                Delete link
+              </Button>
             </span>
           </div>
         ))}

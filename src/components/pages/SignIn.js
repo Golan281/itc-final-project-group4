@@ -31,6 +31,7 @@ export default function SignIn() {
 
   const onSubmitLogin = async (e) => {
     try {
+      console.log('just for netlify test',currentUser);
       e.preventDefault();
       const user = {
         email: email,

@@ -26,6 +26,7 @@ function App() {
     }
   }, []);
 
+
   // useEffect(() => {
   //   async function getUser() {
   //     try {
@@ -41,6 +42,7 @@ function App() {
   //   }
   //   getUser();
   // }, [token, setCurrentUser]);
+
 
   // useEffect(() => {
   //   async function getUserWorkSpace() {

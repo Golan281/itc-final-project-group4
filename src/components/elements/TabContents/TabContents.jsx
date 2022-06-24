@@ -71,6 +71,8 @@ const TabContents = (workSpaceIDName) => {
       return;
     }
 
+    console.log(currentUser);
+    console.log('just for netlify test',rerender);
     let timeStamp = new Date().getTime();
     const newTab = {
       id: nanoid(),
@@ -170,6 +172,7 @@ const TabContents = (workSpaceIDName) => {
   //     console.log(err);
   //   }
   // };
+
 
   return (
     <div>

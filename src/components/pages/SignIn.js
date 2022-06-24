@@ -15,6 +15,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import logo from "../images/tabCollectLogo.PNG";
 import useStore from "../../Store/useStore";
+import { Link } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -122,7 +123,9 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-
+            <Link to="/" variant="body2">
+              Need to sign in?
+            </Link>
             <Grid container justifyContent="center"></Grid>
           </Box>
         </Box>{" "}

@@ -70,3 +70,37 @@
     }
   }
 }
+
+.link-styles-Archived {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: center;
+  margin-top: 200px;
+
+  span {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    text-align: center;
+
+    a:link {
+      font-size: x-large;
+      font-family: "Dosis", sans-serif;
+      color: rgb(54, 57, 57);
+    }
+    a:visited {
+      color: rgb(54, 57, 57);
+    }
+
+    Button {
+      color: whitesmoke;
+      background-color: #860d0f;
+
+      &:hover {
+        background-color: #e21111;
+      }
+    }
+  }
+}

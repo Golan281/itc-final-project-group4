@@ -5,6 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import TabContents from "../elements/TabContents/TabContents";
+import useStore from "../../Store/useStore";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,6 +37,7 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs() {
+  const currentUser = useStore((state) => state.currentUser);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -65,19 +67,19 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <TabContents workSpaceIDName="work" />
+        <TabContents workSpaceIDName={`${currentUser.id + "work"}`} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <TabContents workSpaceIDName="home" />
+        <TabContents workSpaceIDName={`${currentUser.id + "home"}`} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <TabContents workSpaceIDName="leisure" />
+        <TabContents workSpaceIDName={`${currentUser.id + "leisure"}`} />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <TabContents workSpaceIDName="hobbies" />
+        <TabContents workSpaceIDName={`${currentUser.id + "hobbies"}`} />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <TabContents workSpaceIDName="education" />
+        <TabContents workSpaceIDName={`${currentUser.id + "education"}`} />
       </TabPanel>
     </Box>
   );
